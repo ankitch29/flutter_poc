@@ -60,7 +60,8 @@ class ImageSliderWidgetState extends State<ImageSliderWidget>
   }
 
   Widget _buildPagerViewSlider() {
-    return Expanded(
+    return SizedBox(
+      height: simpleSliderController.imageHeight,
       child: PageView.builder(
         controller: simpleSliderController.pageController,
         itemCount: simpleSliderController.pages.length,
@@ -91,7 +92,6 @@ class ImageSliderWidgetState extends State<ImageSliderWidget>
   }
 
   Widget _buildImagePageItem(String imgUrl) {
-    print(simpleSliderController.imageHeight);
     return Padding(
       padding: const EdgeInsets.only(right: 1, left: 1),
       child: Image.asset(imgUrl,
