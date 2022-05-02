@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_poc/screens/enquiry_information/ui/enquiry_information_page.dart';
 import 'package:flutter_poc/screens/initial/initial_screen.dart';
-import 'package:flutter_poc/screens/splash_screen/ui/splash_screen.dart';
 import 'package:get/get.dart';
 
 ///Main entry point this app
@@ -18,7 +18,7 @@ void main() {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: SplashScreen()));
+      home: EnquiryInformation()));
 }
 
 /// Initial widget

@@ -10,66 +10,77 @@ class EnquiryInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 48),
-            Center(child: Image.asset("images/logo_name_blue.png")),
             Expanded(
-                flex: 3,
+                flex: 1,
+                child: Center(child: Image.asset("images/logo_name_blue.png"))),
+            Expanded(
+                flex: 5,
                 child: Container(
                   alignment: Alignment.center,
                   child: ImageSliderWidget(
                     imageUrls: enquiryController.slideImages,
-                    imageBorderRadius: BorderRadius.circular(8.0),
-                    imageHeight: MediaQuery.of(context).size.height/3.5,
+                    imageHeight: size.height / 3.5,
                   ),
                 )),
-            Padding(
-              padding: const EdgeInsets.only(left: 25, right: 25,bottom: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    Constants.enquiryInfoStr,
-                    style: TextStyle(
-                        color: ColourConstants.textColour,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 25, right: 25, bottom: 10),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text(
+                        Constants.enquiryInfoStr,
+                        style: TextStyle(
+                            color: ColourConstants.textColour,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: size.height / 40),
+                      TextField(
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide: const BorderSide(
+                                width: 0,
+                                style: BorderStyle.none,
+                              ),
+                            ),
+                            filled: true,
+                            hintStyle: const TextStyle(
+                                color: ColourConstants.textFieldHint),
+                            hintText: Constants.enquiryInfoHint,
+                            fillColor: ColourConstants.textFieldBG),
+                      ),
+                      SizedBox(height: size.height / 40),
+                      SizedBox(
+                        width: double.maxFinite,
+                        height: size.height / 18,
+                        child: ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                              ),
+                              primary: ColourConstants.accent,
+                            ),
+                            child: const Text(
+                              'Search',
+                              style: TextStyle(color: Colors.black),
+                            )),
+                      )
+                    ],
                   ),
-                  const SizedBox(height: 18),
-                  TextField(
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30),
-                          borderSide: const BorderSide(
-                            width: 0,
-                            style: BorderStyle.none,
-                          ),
-                        ),
-                        filled: true,
-                        hintStyle: const TextStyle(
-                            color: ColourConstants.textFieldHint),
-                        hintText: Constants.enquiryInfoHint,
-                        fillColor: ColourConstants.textFieldBG),
-                  ),
-                  const SizedBox(height: 18),
-                  SizedBox(
-                    width: double.maxFinite,
-                    height: 45,
-                    child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                          ),
-                          primary: ColourConstants.accent,
-                        ),
-                        child: const Text('Search',style: TextStyle(color: Colors.black),)),
-                  )
-                ],
+                ),
               ),
             ),
           ],

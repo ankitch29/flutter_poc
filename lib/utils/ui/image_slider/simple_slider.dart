@@ -1,18 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_poc/utils/ui/image_slider/dot_indicator.dart';
+import 'package:flutter_poc/utils/ui/image_slider/simple_slider_controller.dart';
 
 class ImageSliderWidget extends StatefulWidget {
-  final List<String> imageUrls;
-  final BorderRadius imageBorderRadius;
-  final double imageHeight;
+  final simpleSliderController = SimpleSliderController();
 
-  const ImageSliderWidget({
+  ImageSliderWidget({
     Key? key,
-    required this.imageUrls,
-    required this.imageBorderRadius,
-    this.imageHeight = 200.0,
-  }) : super(key: key);
+    required List<String> imageUrls,
+    double imageHeight = 200.0,
+  }) : super(key: key) {
+    simpleSliderController.imageHeight = imageHeight;
+    simpleSliderController.imageUrls = imageUrls;
+  }
 
   @override
   ImageSliderWidgetState createState() {
@@ -22,14 +23,13 @@ class ImageSliderWidget extends StatefulWidget {
 
 class ImageSliderWidgetState extends State<ImageSliderWidget>
     with SingleTickerProviderStateMixin {
-  List<Widget> _pages = [];
-
-  final _pageController = PageController(initialPage: 0, keepPage: true);
+  late SimpleSliderController simpleSliderController;
 
   @override
   void initState() {
     super.initState();
-    _pages = widget.imageUrls.map((url) {
+    simpleSliderController = widget.simpleSliderController;
+    simpleSliderController.pages = simpleSliderController.imageUrls.map((url) {
       return _buildImagePageItem(url);
     }).toList();
   }
@@ -37,7 +37,7 @@ class ImageSliderWidgetState extends State<ImageSliderWidget>
   @override
   void dispose() {
     super.dispose();
-    _pageController.dispose();
+    simpleSliderController.pageController.dispose();
   }
 
   @override
@@ -52,7 +52,7 @@ class ImageSliderWidgetState extends State<ImageSliderWidget>
         mainAxisSize: MainAxisSize.min,
         children: [
           _buildPagerViewSlider(),
-          SizedBox(height: MediaQuery.of(context).size.height / 12),
+          SizedBox(height: MediaQuery.of(context).size.height / 13),
           _buildDotsIndicatorOverlay(),
         ],
       ),
@@ -61,15 +61,15 @@ class ImageSliderWidgetState extends State<ImageSliderWidget>
 
   Widget _buildPagerViewSlider() {
     return SizedBox(
-      height: widget.imageHeight,
+      height: simpleSliderController.imageHeight,
       child: PageView.builder(
-        controller: _pageController,
-        itemCount: _pages.length,
+        controller: simpleSliderController.pageController,
+        itemCount: simpleSliderController.pages.length,
         itemBuilder: (BuildContext context, int index) {
-          return _pages[index % _pages.length];
+          return simpleSliderController
+              .pages[index % simpleSliderController.pages.length];
         },
-        onPageChanged: (int p) {
-        },
+        onPageChanged: (int p) {},
       ),
     );
   }
@@ -78,10 +78,10 @@ class ImageSliderWidgetState extends State<ImageSliderWidget>
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: DotsIndicator(
-        _pageController,
-        _pages.length,
+        simpleSliderController.pageController,
+        simpleSliderController.pages.length,
         (int page) {
-          _pageController.animateToPage(
+          simpleSliderController.pageController.animateToPage(
             page,
             duration: const Duration(milliseconds: 300),
             curve: Curves.ease,
@@ -92,15 +92,12 @@ class ImageSliderWidgetState extends State<ImageSliderWidget>
   }
 
   Widget _buildImagePageItem(String imgUrl) {
-    return ClipRRect(
-      borderRadius: widget.imageBorderRadius,
-      child: Padding(
-        padding: const EdgeInsets.only(right: 1, left: 1),
-        child: Image.asset(imgUrl,
-            height: widget.imageHeight,
-            width: widget.imageHeight,
-            fit: BoxFit.fitHeight),
-      ),
+    return Padding(
+      padding: const EdgeInsets.only(right: 1, left: 1),
+      child: Image.asset(imgUrl,
+          height: simpleSliderController.imageHeight,
+          width: simpleSliderController.imageHeight,
+          fit: BoxFit.fitHeight),
     );
   }
 }

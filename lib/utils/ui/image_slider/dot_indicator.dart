@@ -1,40 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_poc/utils/constants.dart';
+import 'package:flutter_poc/utils/ui/image_slider/dot_indicator_controller.dart';
 
 class DotsIndicator extends AnimatedWidget {
-  const DotsIndicator(this.controller, this.itemCount, this.onPageSelected,
+  final _dotIndicatorController = DocIndicatorController();
+
+  DotsIndicator(PageController controller, int itemCount,
+      ValueChanged<int> onPageSelected,
       {Key? key})
-      : super(listenable: controller, key: key);
-
-  /// The PageController that this DotsIndicator is representing.
-  final PageController controller;
-
-  /// The number of items managed by the PageController
-  final int itemCount;
-
-  /// Called when a dot is tapped
-  final ValueChanged<int> onPageSelected;
-
-  // The base size of the dots
-  static const double _kDotSize = 10.0;
-
-  // The distance between the center of each dot
-  static const double _kDotSpacing = 15.0;
+      : super(listenable: controller, key: key) {
+    _dotIndicatorController.controller = controller;
+    _dotIndicatorController.itemCount = itemCount;
+    _dotIndicatorController.onPageSelected = onPageSelected;
+  }
 
   Widget _buildDot(int index) {
     return SizedBox(
-      width: _kDotSpacing,
+      width: _dotIndicatorController.kDotSpacing,
       child: Center(
         child: Material(
-          color: index == (controller.page ?? 0)
+          color: index == (_dotIndicatorController.controller.page ?? 0)
               ? ColourConstants.primary
               : ColourConstants.nonHighlightedColor,
           type: MaterialType.circle,
           child: SizedBox(
-            width: _kDotSize,
-            height: _kDotSize,
+            width: _dotIndicatorController.kDotSize,
+            height: _dotIndicatorController.kDotSize,
             child: InkWell(
-              onTap: () => onPageSelected(index),
+              onTap: () => _dotIndicatorController.onPageSelected(index),
             ),
           ),
         ),
@@ -46,7 +39,7 @@ class DotsIndicator extends AnimatedWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: List<Widget>.generate(itemCount, _buildDot),
+      children: List<Widget>.generate(_dotIndicatorController.itemCount, _buildDot),
     );
   }
 }
