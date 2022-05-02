@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_poc/screens/enquiry_information/ui/enquiry_information_page.dart';
 import 'package:flutter_poc/screens/initial/initial_screen.dart';
 import 'package:get/get.dart';
 
@@ -17,7 +18,7 @@ void main() {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: const MyApp()));
+      home: EnquiryInformation()));
 }
 
 /// Initial widget
