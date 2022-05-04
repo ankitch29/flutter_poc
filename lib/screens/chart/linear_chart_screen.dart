@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_poc/utils/constants.dart';
 
 class LineChartSample4 extends StatelessWidget {
   const LineChartSample4({Key? key}) : super(key: key);
@@ -60,7 +61,7 @@ class LineChartSample4 extends StatelessWidget {
 
   static const _dateTextStyle = TextStyle(
     fontSize: 10,
-    color: Colors.purple,
+    color: ColourConstants.primary,
     fontWeight: FontWeight.bold,
   );
 
@@ -93,16 +94,16 @@ class LineChartSample4 extends StatelessWidget {
                 ],
                 isCurved: true,
                 barWidth: 8,
-                color: Colors.purpleAccent,
+                color: ColourConstants.primary,
                 belowBarData: BarAreaData(
                   show: true,
-                  color: Colors.deepPurple.withOpacity(0.4),
+                  color: ColourConstants.primary.withOpacity(0.4),
                   cutOffY: cutOffYValue,
                   applyCutOffY: true,
                 ),
                 aboveBarData: BarAreaData(
                   show: true,
-                  color: Colors.orange.withOpacity(0.6),
+                  color: ColourConstants.accent.withOpacity(0.6),
                   cutOffY: cutOffYValue,
                   applyCutOffY: true,
                 ),

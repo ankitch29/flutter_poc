@@ -86,7 +86,7 @@ class EnquiryInformation extends StatelessWidget {
                             ),
                             child: const Text(
                               'Search',
-                              style: TextStyle(color: Colors.black),
+                              style: TextStyle(color: Colors.white),
                             )),
                       )
                     ],

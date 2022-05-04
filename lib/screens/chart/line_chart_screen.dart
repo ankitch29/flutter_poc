@@ -4,6 +4,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
+import 'package:flutter_poc/utils/constants.dart';
+
 class LineChartSample10 extends StatefulWidget {
   const LineChartSample10({Key? key}) : super(key: key);
 
@@ -12,8 +14,8 @@ class LineChartSample10 extends StatefulWidget {
 }
 
 class _LineChartSample10State extends State<LineChartSample10> {
-  final Color sinColor = Colors.redAccent;
-  final Color cosColor = Colors.blueAccent;
+  final Color sinColor = ColourConstants.primary;
+  final Color cosColor = ColourConstants.accent;
 
   final limitCount = 100;
   final sinPoints = <FlSpot>[];
