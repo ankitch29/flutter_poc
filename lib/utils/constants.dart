@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-enum DASHBOARD_MENU { dashboard, newData, message }
+enum DASHBOARD_MENU { dashboard, newData, message, commercial}
 
 ///All the const would be here
 class Constants {
@@ -20,6 +20,7 @@ class ColourConstants {
   static const Color textDeclinedSubTitle = Color(0xFF646464);
   static const Color textAcceptTitled = Color(0xFFEB5D1E);
   static const Color progressPercentage = Color(0xFFFCAF47);
+  static const Color progressShadow = Color(0x4A000000);
 }
 
 class NumberConstants {

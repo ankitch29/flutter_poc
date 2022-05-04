@@ -94,6 +94,8 @@ class MenuSelectedWidget extends StatelessWidget {
           return ChartsScreen();
         case DASHBOARD_MENU.message:
           return PDFViewerScreen();
+        case DASHBOARD_MENU.commercial:
+          return const DashboardMenu();
         default:
           return const DashboardMenu();
       }
