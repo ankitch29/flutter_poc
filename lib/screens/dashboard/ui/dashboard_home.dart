@@ -6,6 +6,7 @@ import 'package:flutter_poc/utils/constants.dart';
 import 'package:flutter_poc/utils/ui/responsive.dart';
 import 'package:get/get.dart';
 
+import '../../chart/charts_screen.dart';
 import '../../pdf/pdf_viewer_screen.dart';
 
 class DashboardInheritedWidget extends InheritedWidget {
@@ -89,9 +90,9 @@ class MenuSelectedWidget extends StatelessWidget {
         case DASHBOARD_MENU.dashboard:
           return Container(color: ColourConstants.primary);
         case DASHBOARD_MENU.newData:
-          return Container(color: Colors.black);
+          return ChartsScreen();
         case DASHBOARD_MENU.message:
-          return  PDFViewerScreen();
+          return PDFViewerScreen();
         default:
           return Container(color: ColourConstants.primary);
       }

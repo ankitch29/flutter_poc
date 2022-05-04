@@ -30,12 +30,11 @@ class DashboardHomeController extends GetxController {
         Icons.dashboard_rounded,
         currentMenu.value == DASHBOARD_MENU.dashboard,
         DASHBOARD_MENU.dashboard));
-    list.add(MenuItem("New Data", Icons.add_circle_outlined,
+    list.add(MenuItem("Charts", Icons.bar_chart,
         currentMenu.value == DASHBOARD_MENU.newData, DASHBOARD_MENU.newData));
-    list.add(MenuItem("Message", Icons.chat_bubble_outlined,
+    list.add(MenuItem("PDF", Icons.picture_as_pdf,
         currentMenu.value == DASHBOARD_MENU.message, DASHBOARD_MENU.message));
     listOfMenuItem.value = list;
-    print("---updated--");
   }
 
   updateCurrentMenu(DASHBOARD_MENU menu) {
