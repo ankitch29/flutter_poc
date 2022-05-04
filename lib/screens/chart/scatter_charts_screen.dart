@@ -15,8 +15,8 @@ class _ScatterChartSample1State extends State {
   final maxY = 50.0;
   final radius = 8.0;
 
-  Color blue1 = const Color(0xFF0D47A1);
-  Color blue2 = const Color(0xFF42A5F5).withOpacity(0.8);
+  Color blue1 = const Color(0xFF00A6CA);
+  Color blue2 = const Color(0xFFFCD800).withOpacity(0.8);
 
   bool showFlutter = true;
 

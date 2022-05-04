@@ -1,10 +1,15 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_poc/screens/chart/bar_chart_2.dart';
+import 'package:flutter_poc/screens/chart/linear_chart_one.dart';
+import 'package:flutter_poc/screens/chart/radar_chart_screen.dart';
 import 'package:flutter_poc/screens/chart/scatter_charts_screen.dart';
 import 'package:get/get.dart';
 
 import '../../utils/constants.dart';
+import 'bar_chart_3.dart';
+import 'bar_chart_screen.dart';
 import 'line_chart_screen.dart';
 import 'linear_chart_screen.dart';
 
@@ -21,16 +26,109 @@ class _ChartsScreenState extends State<ChartsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: Colors.grey.shade50,
       body: SingleChildScrollView(
         child: Column(
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
+                height: 350,
+                width: Get.width,
+                child: const Card(
+                  elevation: 24,
+                  child: BarChartSample1(),
+                ),
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: SizedBox(
+                  height: 450,
+                  width: double.infinity,
+                  child: Card(elevation: 24, child: LineChartSample10())),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                height: 250,
+                width: Get.width,
+                child: const Card(
+                  elevation: 24,
+                  child: LineChartSample5(),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                height: 250,
+                width: Get.width,
+                child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      isShowingMainData = !isShowingMainData;
+                    });
+                  },
+                  child: Card(
+                    elevation: 24,
+                    child: _LineChart(
+                      isShowingMainData: isShowingMainData,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: SizedBox(
+                  height: 450,
+                  width: double.infinity,
+                  child: Card(elevation: 24, child: ScatterChartSample1())),
+            ),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: SizedBox(
+                  height: 450,
+                  width: double.infinity,
+                  child: Card(elevation: 24, child: LineChartSample4())),
+            ),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: SizedBox(
+                  height: 450,
+                  width: double.infinity,
+                  child: Card(elevation: 24, child: BarChartSample5())),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                height: 650,
+                width: Get.width,
+                child: const Card(
+                  elevation: 24,
+                  child: BarChartSample6(),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                height: 650,
+                width: Get.width,
+                child: const Card(
+                  elevation: 24,
+                  child: BarChartSample2(),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
                 height: 250,
                 width: Get.width,
                 child: Card(
+                  elevation: 24,
                   child: PieChart(
                     PieChartData(
                         centerSpaceRadius: 20,
@@ -74,48 +172,6 @@ class _ChartsScreenState extends State<ChartsScreen> {
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SizedBox(
-                height: 250,
-                width: Get.width,
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      isShowingMainData = !isShowingMainData;
-                    });
-                  },
-                  child: Card(
-                    child: _LineChart(
-                      isShowingMainData: isShowingMainData,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: SizedBox(
-                  height: 450,
-                  width: double.infinity,
-                  child: Card(child: LineChartSample10())),
-            ),
-
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: SizedBox(
-                  height: 450,
-                  width: double.infinity,
-                  child: Card(child: ScatterChartSample1())),
-            ),
-
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: SizedBox(
-                  height: 450,
-                  width: double.infinity,
-                  child: Card(child: LineChartSample4())),
             ),
           ],
         ),
@@ -370,13 +426,13 @@ class _LineChart extends StatelessWidget {
 
   LineChartBarData get lineChartBarData2_2 => LineChartBarData(
         isCurved: true,
-        color: const Color(0x99aa4cfc),
+        color: const Color(0xFF00A6CA),
         barWidth: 4,
         isStrokeCapRound: true,
         dotData: FlDotData(show: false),
         belowBarData: BarAreaData(
           show: true,
-          color: const Color(0x33aa4cfc),
+          color: const Color(0x55FCD800),
         ),
         spots: const [
           FlSpot(1, 1),

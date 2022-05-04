@@ -5,7 +5,7 @@ import 'package:flutter_poc/screens/initial/initial_screen.dart';
 import 'package:flutter_poc/utils/constants.dart';
 import 'package:flutter_poc/utils/ui/scroll_behaviours.dart';
 import 'package:get/get.dart';
-
+import 'dart:js' as js;
 ///Main entry point this app
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,9 +22,19 @@ void main() {
       theme: ThemeData(
           primaryColor: ColourConstants.primary,
           accentColor: ColourConstants.accent),
-      home: EnquiryInformation()));
+      home: EnquiryInformation(),),
+  );
+
+}
+extension ColorString on Color {
+  String toHexString() {
+    return '#${(value & 0xFFFFFF).toRadixString(16).padLeft(6, '0').toUpperCase()}';
+  }
 }
 
+void setMetaThemeColor(Color color) {
+  js.context.callMethod("setMetaThemeColor", [color.toHexString()]);
+}
 /// Initial widget
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -46,4 +56,6 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
+
+
 }
