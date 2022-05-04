@@ -72,7 +72,9 @@ class EnquiryInformation extends StatelessWidget {
                           width: double.maxFinite,
                           height: size.height / 18,
                           child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                enquiryController.navigateToDashboard();
+                              },
                               style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30.0),

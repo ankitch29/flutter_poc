@@ -15,3 +15,7 @@ class ColourConstants {
   static const Color nonHighlightedColor = Color(0xFFF2EFEF);
   static const Color accent = Color(0xFFFCD800);
 }
+
+class NumberConstants {
+  static const double kDefaultPadding = 20.0;
+}
