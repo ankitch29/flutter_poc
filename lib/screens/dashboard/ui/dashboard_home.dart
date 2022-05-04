@@ -82,7 +82,7 @@ class _DashboardHomeState extends State<DashboardHome> {
         case DASHBOARD_MENU.newData:
           return Container(color: Colors.black);
         case DASHBOARD_MENU.message:
-          return const PDFViewerScreen();
+          return  PDFViewerScreen();
         default:
           return Container(color: ColourConstants.primary);
       }

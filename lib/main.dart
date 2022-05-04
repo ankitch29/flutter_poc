@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 
 ///Main entry point this app
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   ///Set the orientation for Portrait only
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
