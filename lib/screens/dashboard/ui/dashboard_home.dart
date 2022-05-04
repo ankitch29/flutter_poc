@@ -34,6 +34,7 @@ class DashboardHome extends StatefulWidget {
 
 class _DashboardHomeState extends State<DashboardHome> {
   final _homeController = Get.put(DashboardHomeController());
+
   @override
   Widget build(BuildContext context) {
     return DashboardInheritedWidget(
@@ -52,8 +53,9 @@ class _DashboardHomeState extends State<DashboardHome> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 20,top: 5,bottom: 8),
-          child: Image.asset("images/logo_name_blue.png",width: _size.width/7),
+          padding: const EdgeInsets.only(left: 20, top: 5, bottom: 8),
+          child:
+              Image.asset("images/logo_name_blue.png", width: _size.width / 7),
         ),
         const Divider(color: ColourConstants.accent),
         Expanded(
@@ -65,7 +67,7 @@ class _DashboardHomeState extends State<DashboardHome> {
               ),
               Expanded(
                 flex: 8,
-                child: getSelectedMenuWidget(),
+                child: MenuSelectedWidget(_homeController),
               ),
             ],
           ),
@@ -73,8 +75,15 @@ class _DashboardHomeState extends State<DashboardHome> {
       ],
     );
   }
+}
 
-  Widget getSelectedMenuWidget() {
+class MenuSelectedWidget extends StatelessWidget {
+  final DashboardHomeController _homeController;
+
+  const MenuSelectedWidget(this._homeController, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Obx(() {
       switch (_homeController.currentMenu.value) {
         case DASHBOARD_MENU.dashboard:

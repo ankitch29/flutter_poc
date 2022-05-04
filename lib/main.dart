@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_poc/screens/enquiry_information/ui/enquiry_information_page.dart';
 import 'package:flutter_poc/screens/initial/initial_screen.dart';
 import 'package:flutter_poc/utils/constants.dart';
+import 'package:flutter_poc/utils/ui/scroll_behaviours.dart';
 import 'package:get/get.dart';
 
 ///Main entry point this app
@@ -17,10 +18,10 @@ void main() {
   ///Setting up theme and initial widget here
   runApp(GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      scrollBehavior: AppScrollBehavior(),
       theme: ThemeData(
-        primaryColor: ColourConstants.primary,
-        accentColor: ColourConstants.accent
-      ),
+          primaryColor: ColourConstants.primary,
+          accentColor: ColourConstants.accent),
       home: EnquiryInformation()));
 }
 
