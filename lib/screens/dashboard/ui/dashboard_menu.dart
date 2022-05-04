@@ -83,7 +83,7 @@ class _DashboardMenuState extends State<DashboardMenu> {
           width: double.maxFinite,
           child: InkWell(
             onTap: () {
-              homeController.updateCurrentMenu(DASHBOARD_MENU.commercial);
+              _dashboardMenuController.navigateToNewCommercial();
             },
             child: Card(
               elevation: 2,
@@ -94,7 +94,6 @@ class _DashboardMenuState extends State<DashboardMenu> {
                     const Text("Cibil Rank",
                         textAlign: TextAlign.left,
                         style: TextStyle(fontSize: 14)),
-
                     _buildRadialTextPointer(),
                     const Text("Rank",
                         textAlign: TextAlign.center,
@@ -582,15 +581,16 @@ class _DashboardMenuState extends State<DashboardMenu> {
             startAngle: 180,
             endAngle: 360,
             minimum: 0,
-            maximum: 120,
+            maximum: 100,
             radiusFactor: 0.79,
             annotations: <GaugeAnnotation>[
               GaugeAnnotation(
-                  angle: 180,
+                positionFactor: 0,
                   widget: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: const [
                       Text(
-                        '7',
+                        '5',
                         style: TextStyle(
                             fontSize: 40,
                             fontWeight: FontWeight.bold),
@@ -605,7 +605,7 @@ class _DashboardMenuState extends State<DashboardMenu> {
                   needleEndWidth: 5,
                   needleLength: 0.5,
                   animationDuration: 2000,
-                  value: 73,
+                  value: 50,
                   enableAnimation: true,
                   knobStyle: KnobStyle(knobRadius: 0)),
             ],
@@ -695,7 +695,7 @@ class _DashboardMenuState extends State<DashboardMenu> {
                   value: 75,
                   cornerStyle: CornerStyle.bothCurve,
                   enableAnimation: true,
-                  animationDuration: 1200,
+                  animationDuration: 3000,
                   animationType: AnimationType.ease,
                   sizeUnit: GaugeSizeUnit.factor,
                   color: ColourConstants.progressPercentage,

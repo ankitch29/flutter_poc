@@ -56,7 +56,6 @@ class _DashboardPageState extends State<DashboardPage> {
                   }
                 })
             : Container(),
-        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.ios_share))],
       ),
       body: MenuSelectedWidget(_homeController),
     );
