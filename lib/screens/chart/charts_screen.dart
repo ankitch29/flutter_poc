@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 
 import '../../utils/constants.dart';
 import 'line_chart_screen.dart';
+import 'linear_chart_screen.dart';
 
 class ChartsScreen extends StatefulWidget {
   const ChartsScreen({Key? key}) : super(key: key);
@@ -107,6 +108,14 @@ class _ChartsScreenState extends State<ChartsScreen> {
                   height: 450,
                   width: double.infinity,
                   child: Card(child: ScatterChartSample1())),
+            ),
+
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: SizedBox(
+                  height: 450,
+                  width: double.infinity,
+                  child: Card(child: LineChartSample4())),
             ),
           ],
         ),
