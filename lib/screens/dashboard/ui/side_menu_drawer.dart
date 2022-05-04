@@ -6,7 +6,10 @@ import 'package:flutter_poc/utils/ui/responsive.dart';
 import 'package:get/get.dart';
 
 class SideMenu extends StatefulWidget {
+  final Function? closeCallBack;
+
   const SideMenu({
+    this.closeCallBack,
     Key? key,
   }) : super(key: key);
 
@@ -70,6 +73,9 @@ class _SideMenuState extends State<SideMenu> {
                       var item = homeController.listOfMenuItem[index];
                       return InkWell(
                         onTap: () {
+                          if (widget.closeCallBack != null) {
+                            widget.closeCallBack!();
+                          }
                           homeController.updateCurrentMenu(item.menuType);
                         },
                         child: MouseRegion(
