@@ -34,6 +34,8 @@ class DashboardHomeController extends GetxController {
         currentMenu.value == DASHBOARD_MENU.newData, DASHBOARD_MENU.newData));
     list.add(MenuItem("PDF", Icons.picture_as_pdf,
         currentMenu.value == DASHBOARD_MENU.message, DASHBOARD_MENU.message));
+    list.add(MenuItem("Commercial", Icons.graphic_eq,
+        currentMenu.value == DASHBOARD_MENU.commercial, DASHBOARD_MENU.commercial));
     listOfMenuItem.value = list;
   }
 

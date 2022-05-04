@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_poc/screens/dashboard/controller/dashboard_home_controller.dart';
 import 'package:flutter_poc/screens/dashboard/controller/dashboard_menu_controller.dart';
+import 'package:flutter_poc/screens/dashboard/ui/dashboard_home.dart';
 import 'package:flutter_poc/utils/constants.dart';
 import 'package:flutter_poc/utils/ui/responsive.dart';
 import 'package:get/get.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class DashboardMenu extends StatefulWidget {
   const DashboardMenu({Key? key}) : super(key: key);
@@ -14,6 +17,14 @@ class DashboardMenu extends StatefulWidget {
 
 class _DashboardMenuState extends State<DashboardMenu> {
   final _dashboardMenuController = Get.put(DashboardMenuController());
+
+  late DashboardHomeController homeController;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    homeController = DashboardInheritedWidget.of(context).homeController;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,38 +81,29 @@ class _DashboardMenuState extends State<DashboardMenu> {
         ),
         SizedBox(
           width: double.maxFinite,
-          child: Card(
-            elevation: 2,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 13, top: 12, bottom: 32),
-              child: Column(
-                children: [
-                  const Text("Cibil Rank",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(fontSize: 14)),
-                  SizedBox(
-                    height: 100,
-                    child: Stack(
-                      children: const [
-                        CircularProgressIndicator(
-                          strokeWidth: 20,
-                          value: 50,
-                        ),
-                        Text("3",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 63, fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                  ),
-                  const Text("Rank",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 13)),
-                  const Text("Average",
-                      textAlign: TextAlign.center,
-                      style:
-                          TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
-                ],
+          child: InkWell(
+            onTap: () {
+              _dashboardMenuController.navigateToNewCommercial();
+            },
+            child: Card(
+              elevation: 2,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 13, top: 12, bottom: 32),
+                child: Column(
+                  children: [
+                    const Text("Cibil Rank",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(fontSize: 14)),
+                    _buildRadialTextPointer(),
+                    const Text("Rank",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 13)),
+                    const Text("Average",
+                        textAlign: TextAlign.center,
+                        style:
+                            TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+                  ],
+                ),
               ),
             ),
           ),
@@ -344,35 +346,7 @@ class _DashboardMenuState extends State<DashboardMenu> {
                       const Text("Credit Profile Summary",
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 13)),
-                      SizedBox(
-                        height: 100,
-                        width: double.maxFinite,
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            const CircularProgressIndicator(
-                              strokeWidth: 20,
-                              value: 50,
-                            ),
-                            Column(
-                              children: const [
-                                Text("75 %",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontSize: 55,
-                                        fontWeight: FontWeight.bold,
-                                        color: ColourConstants
-                                            .progressPercentage)),
-                                Text("Utilised",
-                                    style: TextStyle(
-                                        fontSize: 13,
-                                        color: ColourConstants
-                                            .textDeclinedSubTitle)),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+                      sfRadialGauge()
                     ],
                   ),
                 ),
@@ -595,4 +569,140 @@ class _DashboardMenuState extends State<DashboardMenu> {
       ],
     );
   }
+
+  Widget _buildRadialTextPointer() {
+    return SfRadialGauge(
+      enableLoadingAnimation: true,
+      axes: <RadialAxis>[
+        RadialAxis(
+            showAxisLine: false,
+            showLabels: false,
+            showTicks: false,
+            startAngle: 180,
+            endAngle: 360,
+            minimum: 0,
+            maximum: 100,
+            radiusFactor: 0.79,
+            annotations: <GaugeAnnotation>[
+              GaugeAnnotation(
+                positionFactor: 0,
+                  widget: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: const [
+                      Text(
+                        '5',
+                        style: TextStyle(
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  )),
+            ],
+            pointers: const <GaugePointer>[
+              NeedlePointer(
+                  needleStartWidth: 1,
+                  lengthUnit: GaugeSizeUnit.factor,
+                  needleEndWidth: 5,
+                  needleLength: 0.5,
+                  animationDuration: 2000,
+                  value: 50,
+                  enableAnimation: true,
+                  knobStyle: KnobStyle(knobRadius: 0)),
+            ],
+            ranges: <GaugeRange>[
+              GaugeRange(
+                  startValue: 0,
+                  endValue: 20,
+                  startWidth: 0.15,
+                  endWidth: 0.15,
+                  sizeUnit: GaugeSizeUnit.factor,
+                  color: const Color(0xFF4DB218)),
+              GaugeRange(
+                  startValue: 20,
+                  endValue: 40,
+                  startWidth: 0.15,
+                  endWidth: 0.15,
+                  sizeUnit: GaugeSizeUnit.factor,
+                  color: const Color(0xFF8FBC3A)),
+              GaugeRange(
+                  startValue: 40,
+                  endValue: 60,
+                  startWidth: 0.15,
+                  endWidth: 0.15,
+                  sizeUnit: GaugeSizeUnit.factor,
+                  color: const Color(0xFFD5D056)),
+              GaugeRange(
+                  startValue: 60,
+                  endValue: 80,
+                  startWidth: 0.15,
+                  endWidth: 0.15,
+                  sizeUnit: GaugeSizeUnit.factor,
+                  color: const Color(0xFFEDC24F)),
+              GaugeRange(
+                  startValue: 80,
+                  endValue: 100,
+                  sizeUnit: GaugeSizeUnit.factor,
+                  startWidth: 0.15,
+                  endWidth: 0.15,
+                  color: const Color(0xFFFCAF47)),
+              GaugeRange(
+                  startValue: 100,
+                  endValue: 120,
+                  startWidth: 0.15,
+                  endWidth: 0.15,
+                  sizeUnit: GaugeSizeUnit.factor,
+                  color: const Color(0xFFF86F46)),
+            ]),
+      ],
+    );
+  }
+
+  Widget sfRadialGauge() {
+    return SfRadialGauge(
+      axes: <RadialAxis>[
+        RadialAxis(
+            showLabels: false,
+            showTicks: false,
+            startAngle: 270,
+            endAngle: 270,
+            minimum: 0,
+            maximum: 100,
+            radiusFactor: 0.5,
+            axisLineStyle: const AxisLineStyle(
+                thicknessUnit: GaugeSizeUnit.factor,
+                thickness: 0.05,
+                color: ColourConstants.progressShadow),
+            annotations: <GaugeAnnotation>[
+              GaugeAnnotation(
+                  angle: 180,
+                  widget: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: const [
+                      Text(
+                        '75%',
+                        style: TextStyle(
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text("Utilised",
+                          style: TextStyle(
+                              fontSize: 13, color: ColourConstants.textDeclinedSubTitle))
+                    ],
+                  )),
+            ],
+            pointers: const <GaugePointer>[
+              RangePointer(
+                  value: 75,
+                  cornerStyle: CornerStyle.bothCurve,
+                  enableAnimation: true,
+                  animationDuration: 3000,
+                  animationType: AnimationType.ease,
+                  sizeUnit: GaugeSizeUnit.factor,
+                  color: ColourConstants.progressPercentage,
+                  width: 0.15),
+            ]),
+      ],
+    );
+  }
+
 }

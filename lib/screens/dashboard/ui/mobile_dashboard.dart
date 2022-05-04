@@ -56,7 +56,6 @@ class _DashboardPageState extends State<DashboardPage> {
                   }
                 })
             : Container(),
-        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.ios_share))],
       ),
       body: MenuSelectedWidget(_homeController),
     );
@@ -71,6 +70,8 @@ class _DashboardPageState extends State<DashboardPage> {
           return const Text("New Data");
         case DASHBOARD_MENU.message:
           return const Text("Messages");
+        case DASHBOARD_MENU.commercial:
+          return const Text("Commercial");
         default:
           return const Text("Cibil Score");
       }
