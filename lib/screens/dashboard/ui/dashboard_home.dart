@@ -92,7 +92,7 @@ class MenuSelectedWidget extends StatelessWidget {
         case DASHBOARD_MENU.message:
           return Container(color: Colors.red);
         default:
-          return Container(color: ColourConstants.primary);
+          return const DashboardMenu();
       }
     });
   }
