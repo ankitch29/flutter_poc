@@ -43,6 +43,8 @@ class _DashboardPageState extends State<DashboardPage> {
           : Container(),
       appBar: AppBar(
         backgroundColor: ColourConstants.accent,
+        title: getTitle(),
+        centerTitle: true,
         leading: Responsive.isMobile(context)
             ? IconButton(
                 icon: const Icon(Icons.menu),
@@ -54,8 +56,24 @@ class _DashboardPageState extends State<DashboardPage> {
                   }
                 })
             : Container(),
+        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.ios_share))],
       ),
       body: MenuSelectedWidget(_homeController),
     );
+  }
+
+  Widget getTitle() {
+    return Obx(() {
+      switch (_homeController.currentMenu.value) {
+        case DASHBOARD_MENU.dashboard:
+          return const Text("Cibil Score");
+        case DASHBOARD_MENU.newData:
+          return const Text("New Data");
+        case DASHBOARD_MENU.message:
+          return const Text("Messages");
+        default:
+          return const Text("Cibil Score");
+      }
+    });
   }
 }

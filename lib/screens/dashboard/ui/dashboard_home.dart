@@ -95,7 +95,7 @@ class MenuSelectedWidget extends StatelessWidget {
         case DASHBOARD_MENU.message:
           return PDFViewerScreen();
         default:
-          return Container(color: ColourConstants.primary);
+          return const DashboardMenu();
       }
     });
   }
