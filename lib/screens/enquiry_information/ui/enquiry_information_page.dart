@@ -13,6 +13,7 @@ class EnquiryInformation extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: ColourConstants.accent,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -81,7 +82,7 @@ class EnquiryInformation extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30.0),
                               ),
-                              primary: ColourConstants.accent,
+                              primary: ColourConstants.primary,
                             ),
                             child: const Text(
                               'Search',
