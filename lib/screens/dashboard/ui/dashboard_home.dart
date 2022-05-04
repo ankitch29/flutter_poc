@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_poc/screens/dashboard/controller/dashboard_home_controller.dart';
-import 'package:flutter_poc/screens/dashboard/ui/dashboard.dart';
+import 'package:flutter_poc/screens/dashboard/ui/dashboard_menu.dart';
+import 'package:flutter_poc/screens/dashboard/ui/mobile_dashboard.dart';
 import 'package:flutter_poc/screens/dashboard/ui/side_menu_drawer.dart';
 import 'package:flutter_poc/utils/constants.dart';
 import 'package:flutter_poc/utils/ui/responsive.dart';
@@ -85,7 +86,7 @@ class MenuSelectedWidget extends StatelessWidget {
     return Obx(() {
       switch (_homeController.currentMenu.value) {
         case DASHBOARD_MENU.dashboard:
-          return Container(color: ColourConstants.primary);
+          return const DashboardMenu();
         case DASHBOARD_MENU.newData:
           return Container(color: Colors.black);
         case DASHBOARD_MENU.message:

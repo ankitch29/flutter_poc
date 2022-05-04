@@ -16,6 +16,10 @@ class ColourConstants {
   static const Color textFieldHint = Color(0xFF575757);
   static const Color nonHighlightedColor = Color(0xFFF2EFEF);
   static const Color accent = Color(0xFFFCD800);
+  static const Color textDeclinedTitle = Color(0xFF5DBD1F);
+  static const Color textDeclinedSubTitle = Color(0xFF646464);
+  static const Color textAcceptTitled = Color(0xFFEB5D1E);
+  static const Color progressPercentage = Color(0xFFFCAF47);
 }
 
 class NumberConstants {
