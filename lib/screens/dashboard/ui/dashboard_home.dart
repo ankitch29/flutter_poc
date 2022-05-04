@@ -6,6 +6,8 @@ import 'package:flutter_poc/utils/constants.dart';
 import 'package:flutter_poc/utils/ui/responsive.dart';
 import 'package:get/get.dart';
 
+import '../../pdf/pdf_viewer_screen.dart';
+
 class DashboardInheritedWidget extends InheritedWidget {
   final DashboardHomeController homeController;
 
@@ -80,7 +82,7 @@ class _DashboardHomeState extends State<DashboardHome> {
         case DASHBOARD_MENU.newData:
           return Container(color: Colors.black);
         case DASHBOARD_MENU.message:
-          return Container(color: Colors.red);
+          return const PDFViewerScreen();
         default:
           return Container(color: ColourConstants.primary);
       }
