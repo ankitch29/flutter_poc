@@ -1,8 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_poc/screens/dashboard/controller/dashboard_home_controller.dart';
 import 'package:flutter_poc/screens/dashboard/ui/dashboard.dart';
 import 'package:flutter_poc/screens/dashboard/ui/side_menu_drawer.dart';
 import 'package:flutter_poc/utils/constants.dart';
 import 'package:flutter_poc/utils/ui/responsive.dart';
+import 'package:get/get.dart';
+
+class DashboardInheritedWidget extends InheritedWidget {
+  final DashboardHomeController homeController;
+
+  const DashboardInheritedWidget(
+      {Key? key, required Widget child, required this.homeController})
+      : super(key: key, child: child);
+
+  static DashboardInheritedWidget of(BuildContext context) {
+    var dashboardProvider =
+        context.dependOnInheritedWidgetOfExactType<DashboardInheritedWidget>()!;
+    return dashboardProvider;
+  }
+
+  @override
+  bool updateShouldNotify(InheritedWidget oldWidget) => true;
+}
 
 class DashboardHome extends StatefulWidget {
   const DashboardHome({Key? key}) : super(key: key);
@@ -12,12 +31,17 @@ class DashboardHome extends StatefulWidget {
 }
 
 class _DashboardHomeState extends State<DashboardHome> {
+  final _homeController = Get.put(DashboardHomeController());
   @override
   Widget build(BuildContext context) {
-    return Responsive(
-        tablet: getDesktopAndTabletDesign(), // made both tablet & desktop same design
-        desktop: getDesktopAndTabletDesign(),
-        mobile: const DashboardPage());
+    return DashboardInheritedWidget(
+      homeController: _homeController,
+      child: Responsive(
+          tablet: getDesktopAndTabletDesign(),
+          // made both tablet & desktop same design
+          desktop: getDesktopAndTabletDesign(),
+          mobile: const DashboardPage()),
+    );
   }
 
   Widget getDesktopAndTabletDesign() {
@@ -35,16 +59,31 @@ class _DashboardHomeState extends State<DashboardHome> {
             children: [
               Expanded(
                 flex: _size.width > 1000 ? 2 : 3,
-                child: SideMenu(),
+                child: const SideMenu(),
               ),
               Expanded(
                 flex: 8,
-                child: Container(color: ColourConstants.primary),
+                child: getSelectedMenuWidget(),
               ),
             ],
           ),
         ),
       ],
     );
+  }
+
+  Widget getSelectedMenuWidget() {
+    return Obx(() {
+      switch (_homeController.currentMenu.value) {
+        case DASHBOARD_MENU.dashboard:
+          return Container(color: ColourConstants.primary);
+        case DASHBOARD_MENU.newData:
+          return Container(color: Colors.black);
+        case DASHBOARD_MENU.message:
+          return Container(color: Colors.red);
+        default:
+          return Container(color: ColourConstants.primary);
+      }
+    });
   }
 }
