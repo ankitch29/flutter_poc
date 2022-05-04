@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_poc/utils/ui/image_slider/dot_indicator.dart';
 import 'package:flutter_poc/utils/ui/image_slider/simple_slider_controller.dart';
+import 'package:flutter_poc/utils/ui/responsive.dart';
 
 class ImageSliderWidget extends StatefulWidget {
   final simpleSliderController = SimpleSliderController();
@@ -60,17 +61,27 @@ class ImageSliderWidgetState extends State<ImageSliderWidget>
   }
 
   Widget _buildPagerViewSlider() {
-    return SizedBox(
-      height: simpleSliderController.imageHeight,
-      child: PageView.builder(
-        controller: simpleSliderController.pageController,
-        itemCount: simpleSliderController.pages.length,
-        itemBuilder: (BuildContext context, int index) {
-          return simpleSliderController
-              .pages[index % simpleSliderController.pages.length];
-        },
-        onPageChanged: (int p) {},
-      ),
+    if (Responsive.isMobile(context) || Responsive.isTablet(context)) {
+      return SizedBox(
+        height: simpleSliderController.imageHeight,
+        child: getPageViewer(),
+      );
+    } else {
+      return Expanded(
+        child: getPageViewer(),
+      );
+    }
+  }
+
+  Widget getPageViewer() {
+    return PageView.builder(
+      controller: simpleSliderController.pageController,
+      itemCount: simpleSliderController.pages.length,
+      itemBuilder: (BuildContext context, int index) {
+        return simpleSliderController
+            .pages[index % simpleSliderController.pages.length];
+      },
+      onPageChanged: (int p) {},
     );
   }
 
