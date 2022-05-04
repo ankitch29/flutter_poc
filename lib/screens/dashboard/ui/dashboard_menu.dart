@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_poc/screens/dashboard/controller/dashboard_home_controller.dart';
 import 'package:flutter_poc/screens/dashboard/controller/dashboard_menu_controller.dart';
+import 'package:flutter_poc/screens/dashboard/ui/dashboard_home.dart';
 import 'package:flutter_poc/utils/constants.dart';
 import 'package:flutter_poc/utils/ui/responsive.dart';
 import 'package:get/get.dart';
@@ -15,6 +17,14 @@ class DashboardMenu extends StatefulWidget {
 
 class _DashboardMenuState extends State<DashboardMenu> {
   final _dashboardMenuController = Get.put(DashboardMenuController());
+
+  late DashboardHomeController homeController;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    homeController = DashboardInheritedWidget.of(context).homeController;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,25 +81,30 @@ class _DashboardMenuState extends State<DashboardMenu> {
         ),
         SizedBox(
           width: double.maxFinite,
-          child: Card(
-            elevation: 2,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 13, top: 12, bottom: 32),
-              child: Column(
-                children: [
-                  const Text("Cibil Rank",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(fontSize: 14)),
+          child: InkWell(
+            onTap: () {
+              homeController.updateCurrentMenu(DASHBOARD_MENU.commercial);
+            },
+            child: Card(
+              elevation: 2,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 13, top: 12, bottom: 32),
+                child: Column(
+                  children: [
+                    const Text("Cibil Rank",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(fontSize: 14)),
 
-                  _buildRadialTextPointer(),
-                  const Text("Rank",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 13)),
-                  const Text("Average",
-                      textAlign: TextAlign.center,
-                      style:
-                          TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
-                ],
+                    _buildRadialTextPointer(),
+                    const Text("Rank",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 13)),
+                    const Text("Average",
+                        textAlign: TextAlign.center,
+                        style:
+                            TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+                  ],
+                ),
               ),
             ),
           ),
