@@ -107,7 +107,7 @@ class BarChartSample6 extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Activity',
+              'Mortgage',
               style: TextStyle(
                 color: Color(0xff171547),
                 fontSize: 16,
@@ -117,9 +117,9 @@ class BarChartSample6 extends StatelessWidget {
             const SizedBox(height: 8),
             LegendsListWidget(
               legends: [
-                Legend("Pilates", pilateColor),
-                Legend("Quick workouts", quickWorkoutColor),
-                Legend("Cycling", cyclingColor),
+                Legend("Paid", pilateColor),
+                Legend("Pending", quickWorkoutColor),
+                Legend("Laps", cyclingColor),
               ],
             ),
             const SizedBox(height: 14),

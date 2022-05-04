@@ -9,6 +9,7 @@ import 'package:flutter_poc/utils/ui/responsive.dart';
 import 'package:get/get.dart';
 
 import '../../chart/charts_screen.dart';
+import '../../commerical/comm_screen.dart';
 import '../../pdf/pdf_viewer_screen.dart';
 
 class DashboardInheritedWidget extends InheritedWidget {
@@ -92,11 +93,11 @@ class MenuSelectedWidget extends StatelessWidget {
         case DASHBOARD_MENU.dashboard:
           return const DashboardMenu();
         case DASHBOARD_MENU.newData:
-          return ChartsScreen();
+          return const ChartsScreen();
         case DASHBOARD_MENU.message:
           return PDFViewerScreen();
         case DASHBOARD_MENU.commercial:
-          return const DashboardMenu();
+          return const CommeScreen();
         default:
           return const DashboardMenu();
       }

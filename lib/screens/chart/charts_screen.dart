@@ -103,7 +103,6 @@ class _ChartsScreenState extends State<ChartsScreen> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
-                height: 650,
                 width: Get.width,
                 child: const Card(
                   elevation: 24,
@@ -122,7 +121,7 @@ class _ChartsScreenState extends State<ChartsScreen> {
                 ),
               ),
             ),
-            Padding(
+            /*       Padding(
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
                 height: 250,
@@ -172,7 +171,7 @@ class _ChartsScreenState extends State<ChartsScreen> {
                   ),
                 ),
               ),
-            ),
+            ),*/
           ],
         ),
       ),
