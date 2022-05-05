@@ -15,10 +15,27 @@ class DashboardMenu extends StatefulWidget {
   _DashboardMenuState createState() => _DashboardMenuState();
 }
 
-class _DashboardMenuState extends State<DashboardMenu> {
+class _DashboardMenuState extends State<DashboardMenu>
+    with TickerProviderStateMixin {
   final _dashboardMenuController = Get.put(DashboardMenuController());
 
   late DashboardHomeController homeController;
+
+  @override
+  void initState() {
+    super.initState();
+    _dashboardMenuController.tabController = TabController(
+      length: 3,
+      vsync: this,
+    );
+    _dashboardMenuController.tabController2 = TabController(
+      length: 3,
+      vsync: this,
+    );
+    //
+    _dashboardMenuController.pageController = PageController(initialPage: 0,keepPage: true);
+    _dashboardMenuController.pageController2 = PageController(initialPage: 0,keepPage: true);
+  }
 
   @override
   void didChangeDependencies() {
@@ -100,8 +117,8 @@ class _DashboardMenuState extends State<DashboardMenu> {
                         style: TextStyle(fontSize: 13)),
                     const Text("Average",
                         textAlign: TextAlign.center,
-                        style:
-                            TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+                        style: TextStyle(
+                            fontSize: 13, fontWeight: FontWeight.bold)),
                   ],
                 ),
               ),
@@ -215,58 +232,120 @@ class _DashboardMenuState extends State<DashboardMenu> {
       children: [
         SizedBox(
           width: double.maxFinite,
-          child: Card(
-            elevation: 2,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 13, right: 18, top: 18),
+          child: DefaultTabController(
+            length: 3,
+            child: Card(
+              elevation: 2,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  columnTitleSubTitleWidget("Name", "Sample India"),
-                  columnTitleSubTitleWidget(
-                      "Legal Constitution", "Private Limited"),
-                  columnTitleSubTitleWidget(
-                      "Class of Activity", "Casting of non-ferrous metals"),
-                  Obx(() {
-                    return Visibility(
-                      visible:
-                          _dashboardMenuController.isVisibleBorrowerData.value,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          columnTitleSubTitleWidget("Business Category",
-                              "Casting of non-ferrous metals"),
-                          columnTitleSubTitleWidget("Industry Type", "Other"),
-                          columnTitleSubTitleWidget(
-                              "Sales Figure", "10,00,00,000 (Year: 2017)"),
-                          columnTitleSubTitleWidget("No of Employees", "25"),
-                          columnTitleSubTitleWidget(
-                              "Date of Incorporation", "1-Apr-10"),
-                        ],
-                      ),
-                    );
-                  }),
-                  Visibility(
-                    visible: Responsive.isMobile(context),
-                    child: Center(
-                      child: TextButton(
-                          onPressed: () {
-                            _dashboardMenuController.isVisibleBorrowerData(
-                                !_dashboardMenuController
-                                    .isVisibleBorrowerData.value);
-                          },
-                          child: Obx(
-                            () => Text(
-                              !_dashboardMenuController
-                                      .isVisibleBorrowerData.value
-                                  ? "View More"
-                                  : "View Less",
-                              style: const TextStyle(
-                                  color: ColourConstants.primary),
-                            ),
-                          )),
+                  Container(
+                    margin: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: const Color(0xFFededf0)),
+                    padding: const EdgeInsets.all(2),
+                    child: TabBar(
+                      controller: _dashboardMenuController.tabController,
+                      indicator: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white),
+                      labelPadding: const EdgeInsets.only(top: 5, bottom: 5),
+                      labelStyle: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold),
+                      labelColor: Colors.black,
+                      unselectedLabelStyle:
+                          const TextStyle(color: Colors.black, fontSize: 13),
+                      tabs: const [
+                        Text("Borrower"),
+                        Text("Contact"),
+                        Text("Identification"),
+                      ],
                     ),
-                  )
+                  ),
+                  SizedBox(
+                    height: Responsive.isMobile(context)? Get.height * 0.3: Get.height * 0.7,
+                    child: Expanded(
+                      child: TabBarView(
+                          controller: _dashboardMenuController.tabController,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 13, right: 18, top: 18),
+                              child: ListView(
+                                children: [
+                                  columnTitleSubTitleWidget("Name", "Sample India"),
+                                  columnTitleSubTitleWidget(
+                                      "Legal Constitution", "Private Limited"),
+                                  columnTitleSubTitleWidget(
+                                      "Class of Activity", "Casting of non-ferrous metals"),
+                                  Obx(() {
+                                    return Visibility(
+                                      visible:
+                                      _dashboardMenuController.isVisibleBorrowerData.value,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          columnTitleSubTitleWidget("Business Category",
+                                              "Casting of non-ferrous metals"),
+                                          columnTitleSubTitleWidget("Industry Type", "Other"),
+                                          columnTitleSubTitleWidget(
+                                              "Sales Figure", "10,00,00,000 (Year: 2017)"),
+                                          columnTitleSubTitleWidget("No of Employees", "25"),
+                                          columnTitleSubTitleWidget(
+                                              "Date of Incorporation", "1-Apr-10"),
+                                        ],
+                                      ),
+                                    );
+                                  }),
+                                  Visibility(
+                                    visible: Responsive.isMobile(context),
+                                    child: Center(
+                                      child: TextButton(
+                                          onPressed: () {
+                                            _dashboardMenuController.isVisibleBorrowerData(
+                                                !_dashboardMenuController
+                                                    .isVisibleBorrowerData.value);
+                                          },
+                                          child: Obx(
+                                                () => Text(
+                                              !_dashboardMenuController
+                                                  .isVisibleBorrowerData.value
+                                                  ? "View More"
+                                                  : "View Less",
+                                              style: const TextStyle(
+                                                  color: ColourConstants.primary),
+                                            ),
+                                          )),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 13, right: 18, top: 18),
+                              child: ListView(
+                                children: [
+                                  columnTitleSubTitleWidget("Mobile Number", "9876543210"),
+                                  columnTitleSubTitleWidget("Telephone Number", "022-28000001"),
+                                  columnTitleSubTitleWidget("Office Address", "10th Floor, ABC Tower, Veer Savarkar Road, Mumbai, 400001"),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 13, right: 18, top: 18),
+                              child: ListView(
+                                children: [
+                                  columnTitleSubTitleWidget("DL Number", "123456HJ-B2"),
+                                  columnTitleSubTitleWidget("Address Proof", "Andhar Card"),
+                                  columnTitleSubTitleWidget("Photo Identity", "Andhar Card"),
+                                  columnTitleSubTitleWidget("Verified", "Yes"),
+                                ],
+                              ),
+                            ),
+                          ]),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -333,219 +412,571 @@ class _DashboardMenuState extends State<DashboardMenu> {
       children: [
         SizedBox(
           width: double.maxFinite,
-          child: Card(
-            elevation: 2,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 13, right: 18, top: 18),
-                  child: Column(
-                    children: [
-                      const Text("Credit Profile Summary",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 13)),
-                      sfRadialGauge()
-                    ],
+          child: DefaultTabController(
+            length: 3,
+            child: Card(
+              elevation: 2,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: const Color(0xFFededf0)),
+                    padding: const EdgeInsets.all(2),
+                    child: TabBar(
+                      controller: _dashboardMenuController.tabController2,
+                      indicator: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white),
+                      labelPadding: const EdgeInsets.all(5),
+                      labelStyle: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold),
+                      labelColor: Colors.black,
+                      unselectedLabelStyle: const TextStyle(
+                          color: Colors.black, fontSize: 13),
+                      tabs: const [
+                        Text("Total"),
+                        Text("Your Institution"),
+                        Text("Outside"),
+                      ],
+                    ),
                   ),
-                ),
-                Responsive.isMobile(context)
-                    ? Padding(
-                        padding:
-                            const EdgeInsets.only(left: 13, right: 18, top: 18),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                  SizedBox(
+                    height: Get.height * 0.6,
+                    child: Expanded(
+                      child: TabBarView(
+                          controller: _dashboardMenuController.tabController2,
                           children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                    child: columnTitleSubTitleWidget(
-                                        "Total Lenders", "02")),
-                                Expanded(
-                                    child: columnTitleSubTitleWidget(
-                                        "Total CF*(s)", "04")),
-                              ],
+                        ListView(
+                          children: [
+                            const Center(
+                              child: Text("Credit Profile Summary",
+                                  style: TextStyle(fontSize: 13)),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 10),
-                              child: Row(
+                            sfRadialGauge(75),
+                            Responsive.isMobile(context)
+                                ? Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 13, right: 18, top: 18),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Expanded(
-                                    child: columnTitleSubTitleWidget(
-                                        "Total Lenders", "02"),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                          child: columnTitleSubTitleWidget(
+                                              "Total Lenders", "02")),
+                                      Expanded(
+                                          child: columnTitleSubTitleWidget(
+                                              "Total CF*(s)", "04")),
+                                    ],
                                   ),
-                                  Expanded(
-                                      child: columnTitleSubTitleWidget(
-                                          "Total CF*(s)", "04")),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: columnTitleSubTitleWidget(
+                                              "Total Lenders", "02"),
+                                        ),
+                                        Expanded(
+                                            child: columnTitleSubTitleWidget(
+                                                "Total CF*(s)", "04")),
+                                      ],
+                                    ),
+                                  )
                                 ],
                               ),
                             )
+                                : Padding(
+                              padding: const EdgeInsets.only(top: 35, bottom: 20),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  const Text("24,34,300",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color:
+                                          ColourConstants.textDeclinedTitle)),
+                                  const Padding(
+                                    padding: EdgeInsets.only(top: 10, bottom: 30),
+                                    child: Text("Total Outstanding",
+                                        style: TextStyle(
+                                            fontSize: 13,
+                                            color: ColourConstants
+                                                .textDeclinedSubTitle)),
+                                  ),
+                                  const Divider(),
+                                  Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 13,
+                                              top: 12,
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: const [
+                                                Text("04",
+                                                    style: TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight: FontWeight.bold,
+                                                        color: ColourConstants
+                                                            .textDeclinedSubTitle)),
+                                                Padding(
+                                                  padding: EdgeInsets.only(top: 10),
+                                                  child: Text("Open CF",
+                                                      style: TextStyle(
+                                                          fontSize: 13,
+                                                          color: ColourConstants
+                                                              .textDeclinedSubTitle)),
+                                                )
+                                              ],
+                                            ),
+                                          )),
+                                      const VerticalDivider(),
+                                      Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 13,
+                                              top: 12,
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: const [
+                                                Text("02",
+                                                    style: TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight: FontWeight.bold,
+                                                        color: ColourConstants
+                                                            .textDeclinedSubTitle)),
+                                                Padding(
+                                                  padding: EdgeInsets.only(top: 10),
+                                                  child: Text("Total Lenders",
+                                                      style: TextStyle(
+                                                          fontSize: 13,
+                                                          color: ColourConstants
+                                                              .textDeclinedSubTitle)),
+                                                )
+                                              ],
+                                            ),
+                                          )),
+                                      const VerticalDivider(),
+                                      Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 13,
+                                              top: 12,
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: const [
+                                                Text("04",
+                                                    style: TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight: FontWeight.bold,
+                                                        color: ColourConstants
+                                                            .textDeclinedSubTitle)),
+                                                Padding(
+                                                  padding: EdgeInsets.only(top: 10),
+                                                  child: Text("Total CF*(s)",
+                                                      style: TextStyle(
+                                                          fontSize: 13,
+                                                          color: ColourConstants
+                                                              .textDeclinedSubTitle)),
+                                                )
+                                              ],
+                                            ),
+                                          )),
+                                    ],
+                                  ),
+                                  const Divider(),
+                                ],
+                              ),
+                            ),
+                            Responsive.isMobile(context) ? const Divider() : Container(),
                           ],
                         ),
-                      )
-                    : Padding(
-                        padding: const EdgeInsets.only(top: 35, bottom: 20),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
+                        ListView(
                           children: [
-                            const Text("24,34,300",
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: ColourConstants.textDeclinedTitle)),
-                            const Padding(
-                              padding: EdgeInsets.only(top: 10, bottom: 30),
-                              child: Text("Total Outstanding",
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      color: ColourConstants
-                                          .textDeclinedSubTitle)),
+                            Center(
+                              child: const Text("Credit Profile Summary",
+                                  style: TextStyle(fontSize: 13)),
                             ),
-                            const Divider(),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Expanded(
-                                    child: Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 13,
-                                    top: 12,
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: const [
-                                      Text("04",
-                                          style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold,
-                                              color: ColourConstants
-                                                  .textDeclinedSubTitle)),
-                                      Padding(
-                                        padding: EdgeInsets.only(top: 10),
-                                        child: Text("Open CF",
-                                            style: TextStyle(
-                                                fontSize: 13,
-                                                color: ColourConstants
-                                                    .textDeclinedSubTitle)),
-                                      )
+                            sfRadialGauge(50),
+                            Responsive.isMobile(context)
+                                ? Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 13, right: 18, top: 18),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                          child: columnTitleSubTitleWidget(
+                                              "Total Lenders", "02")),
+                                      Expanded(
+                                          child: columnTitleSubTitleWidget(
+                                              "Total CF*(s)", "04")),
                                     ],
                                   ),
-                                )),
-                                const VerticalDivider(),
-                                Expanded(
-                                    child: Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 13,
-                                    top: 12,
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: columnTitleSubTitleWidget(
+                                              "Total Lenders", "02"),
+                                        ),
+                                        Expanded(
+                                            child: columnTitleSubTitleWidget(
+                                                "Total CF*(s)", "04")),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )
+                                : Padding(
+                              padding: const EdgeInsets.only(top: 35, bottom: 20),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  const Text("24,34,300",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color:
+                                          ColourConstants.textDeclinedTitle)),
+                                  const Padding(
+                                    padding: EdgeInsets.only(top: 10, bottom: 30),
+                                    child: Text("Total Outstanding",
+                                        style: TextStyle(
+                                            fontSize: 13,
+                                            color: ColourConstants
+                                                .textDeclinedSubTitle)),
                                   ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: const [
-                                      Text("02",
-                                          style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold,
-                                              color: ColourConstants
-                                                  .textDeclinedSubTitle)),
-                                      Padding(
-                                        padding: EdgeInsets.only(top: 10),
-                                        child: Text("Total Lenders",
-                                            style: TextStyle(
-                                                fontSize: 13,
-                                                color: ColourConstants
-                                                    .textDeclinedSubTitle)),
-                                      )
+                                  const Divider(),
+                                  Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 13,
+                                              top: 12,
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: const [
+                                                Text("04",
+                                                    style: TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight: FontWeight.bold,
+                                                        color: ColourConstants
+                                                            .textDeclinedSubTitle)),
+                                                Padding(
+                                                  padding: EdgeInsets.only(top: 10),
+                                                  child: Text("Open CF",
+                                                      style: TextStyle(
+                                                          fontSize: 13,
+                                                          color: ColourConstants
+                                                              .textDeclinedSubTitle)),
+                                                )
+                                              ],
+                                            ),
+                                          )),
+                                      const VerticalDivider(),
+                                      Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 13,
+                                              top: 12,
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: const [
+                                                Text("02",
+                                                    style: TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight: FontWeight.bold,
+                                                        color: ColourConstants
+                                                            .textDeclinedSubTitle)),
+                                                Padding(
+                                                  padding: EdgeInsets.only(top: 10),
+                                                  child: Text("Total Lenders",
+                                                      style: TextStyle(
+                                                          fontSize: 13,
+                                                          color: ColourConstants
+                                                              .textDeclinedSubTitle)),
+                                                )
+                                              ],
+                                            ),
+                                          )),
+                                      const VerticalDivider(),
+                                      Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 13,
+                                              top: 12,
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: const [
+                                                Text("04",
+                                                    style: TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight: FontWeight.bold,
+                                                        color: ColourConstants
+                                                            .textDeclinedSubTitle)),
+                                                Padding(
+                                                  padding: EdgeInsets.only(top: 10),
+                                                  child: Text("Total CF*(s)",
+                                                      style: TextStyle(
+                                                          fontSize: 13,
+                                                          color: ColourConstants
+                                                              .textDeclinedSubTitle)),
+                                                )
+                                              ],
+                                            ),
+                                          )),
                                     ],
                                   ),
-                                )),
-                                const VerticalDivider(),
-                                Expanded(
-                                    child: Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 13,
-                                    top: 12,
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: const [
-                                      Text("04",
-                                          style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold,
-                                              color: ColourConstants
-                                                  .textDeclinedSubTitle)),
-                                      Padding(
-                                        padding: EdgeInsets.only(top: 10),
-                                        child: Text("Total CF*(s)",
-                                            style: TextStyle(
-                                                fontSize: 13,
-                                                color: ColourConstants
-                                                    .textDeclinedSubTitle)),
-                                      )
+                                  const Divider(),
+                                ],
+                              ),
+                            ),
+                            Responsive.isMobile(context) ? const Divider() : Container(),
+                          ],
+                        ),
+                        ListView(
+                          children: [
+                            Center(
+                              child: const Text("Credit Profile Summary",
+                                  style: TextStyle(fontSize: 13)),
+                            ),
+                            sfRadialGauge(90),
+                            Responsive.isMobile(context)
+                                ? Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 13, right: 18, top: 18),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                          child: columnTitleSubTitleWidget(
+                                              "Total Lenders", "02")),
+                                      Expanded(
+                                          child: columnTitleSubTitleWidget(
+                                              "Total CF*(s)", "04")),
                                     ],
                                   ),
-                                )),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: columnTitleSubTitleWidget(
+                                              "Total Lenders", "02"),
+                                        ),
+                                        Expanded(
+                                            child: columnTitleSubTitleWidget(
+                                                "Total CF*(s)", "04")),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )
+                                : Padding(
+                              padding: const EdgeInsets.only(top: 35, bottom: 20),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  const Text("24,34,300",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color:
+                                          ColourConstants.textDeclinedTitle)),
+                                  const Padding(
+                                    padding: EdgeInsets.only(top: 10, bottom: 30),
+                                    child: Text("Total Outstanding",
+                                        style: TextStyle(
+                                            fontSize: 13,
+                                            color: ColourConstants
+                                                .textDeclinedSubTitle)),
+                                  ),
+                                  const Divider(),
+                                  Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 13,
+                                              top: 12,
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: const [
+                                                Text("04",
+                                                    style: TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight: FontWeight.bold,
+                                                        color: ColourConstants
+                                                            .textDeclinedSubTitle)),
+                                                Padding(
+                                                  padding: EdgeInsets.only(top: 10),
+                                                  child: Text("Open CF",
+                                                      style: TextStyle(
+                                                          fontSize: 13,
+                                                          color: ColourConstants
+                                                              .textDeclinedSubTitle)),
+                                                )
+                                              ],
+                                            ),
+                                          )),
+                                      const VerticalDivider(),
+                                      Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 13,
+                                              top: 12,
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: const [
+                                                Text("02",
+                                                    style: TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight: FontWeight.bold,
+                                                        color: ColourConstants
+                                                            .textDeclinedSubTitle)),
+                                                Padding(
+                                                  padding: EdgeInsets.only(top: 10),
+                                                  child: Text("Total Lenders",
+                                                      style: TextStyle(
+                                                          fontSize: 13,
+                                                          color: ColourConstants
+                                                              .textDeclinedSubTitle)),
+                                                )
+                                              ],
+                                            ),
+                                          )),
+                                      const VerticalDivider(),
+                                      Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 13,
+                                              top: 12,
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: const [
+                                                Text("04",
+                                                    style: TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight: FontWeight.bold,
+                                                        color: ColourConstants
+                                                            .textDeclinedSubTitle)),
+                                                Padding(
+                                                  padding: EdgeInsets.only(top: 10),
+                                                  child: Text("Total CF*(s)",
+                                                      style: TextStyle(
+                                                          fontSize: 13,
+                                                          color: ColourConstants
+                                                              .textDeclinedSubTitle)),
+                                                )
+                                              ],
+                                            ),
+                                          )),
+                                    ],
+                                  ),
+                                  const Divider(),
+                                ],
+                              ),
+                            ),
+                            Responsive.isMobile(context) ? const Divider() : Container(),
+                          ],
+                        ),
+                      ]),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 13, right: 18, top: 18, bottom: 15),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 10),
+                          child: Text("Delinquent Summary",
+                              style: TextStyle(fontSize: 14)),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: const [
+                                Text("10,34,300",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color:
+                                            ColourConstants.textDeclinedTitle)),
+                                Text("Total Outstanding",
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        color: ColourConstants
+                                            .textDeclinedSubTitle)),
                               ],
                             ),
-                            const Divider(),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: const [
+                                Text("01",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color:
+                                            ColourConstants.textDeclinedTitle)),
+                                Text("Delinquent CF",
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        color: ColourConstants
+                                            .textDeclinedSubTitle)),
+                              ],
+                            )
                           ],
                         ),
-                      ),
-                Responsive.isMobile(context) ? const Divider() : Container(),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 13, right: 18, top: 18, bottom: 15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(bottom: 10),
-                        child: Text("Delinquent Summary",
-                            style: TextStyle(fontSize: 14)),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text("10,34,300",
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      color:
-                                          ColourConstants.textDeclinedTitle)),
-                              Text("Total Outstanding",
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      color: ColourConstants
-                                          .textDeclinedSubTitle)),
-                            ],
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text("01",
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      color:
-                                          ColourConstants.textDeclinedTitle)),
-                              Text("Delinquent CF",
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      color: ColourConstants
-                                          .textDeclinedSubTitle)),
-                            ],
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                )
-              ],
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         )
@@ -585,15 +1016,14 @@ class _DashboardMenuState extends State<DashboardMenu> {
             radiusFactor: 0.79,
             annotations: <GaugeAnnotation>[
               GaugeAnnotation(
-                positionFactor: 0,
+                  positionFactor: 0,
                   widget: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: const [
                       Text(
                         '5',
                         style: TextStyle(
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold),
+                            fontSize: 40, fontWeight: FontWeight.bold),
                       ),
                     ],
                   )),
@@ -657,7 +1087,7 @@ class _DashboardMenuState extends State<DashboardMenu> {
     );
   }
 
-  Widget sfRadialGauge() {
+  Widget sfRadialGauge(double value) {
     return SfRadialGauge(
       axes: <RadialAxis>[
         RadialAxis(
@@ -677,22 +1107,21 @@ class _DashboardMenuState extends State<DashboardMenu> {
                   angle: 180,
                   widget: Column(
                     mainAxisSize: MainAxisSize.min,
-                    children: const [
-                      Text(
-                        '75%',
+                    children: [
+                      Text("${value.toInt()}%",
                         style: TextStyle(
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold),
+                            fontSize: 40, fontWeight: FontWeight.bold),
                       ),
-                      Text("Utilised",
+                      const Text("Utilised",
                           style: TextStyle(
-                              fontSize: 13, color: ColourConstants.textDeclinedSubTitle))
+                              fontSize: 13,
+                              color: ColourConstants.textDeclinedSubTitle))
                     ],
                   )),
             ],
-            pointers: const <GaugePointer>[
+            pointers: <GaugePointer>[
               RangePointer(
-                  value: 75,
+                  value: value,
                   cornerStyle: CornerStyle.bothCurve,
                   enableAnimation: true,
                   animationDuration: 3000,
@@ -704,5 +1133,4 @@ class _DashboardMenuState extends State<DashboardMenu> {
       ],
     );
   }
-
 }
