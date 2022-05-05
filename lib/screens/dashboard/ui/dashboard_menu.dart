@@ -32,9 +32,6 @@ class _DashboardMenuState extends State<DashboardMenu>
       length: 3,
       vsync: this,
     );
-    //
-    _dashboardMenuController.pageController = PageController(initialPage: 0,keepPage: true);
-    _dashboardMenuController.pageController2 = PageController(initialPage: 0,keepPage: true);
   }
 
   @override
